@@ -1,25 +1,30 @@
 # Map-Sync
 
-Share map data with your friends, live, privately.
-Supports Journeymap and Voxelmap.
+**Real-time terrain synchronization**: See exactly what your friends see, as they explore it.
 
-## [Download](https://github.com/CivPlatform/map-sync/releases)
+Supports `Journeymap`, `Voxelmap` and `Xaero's World Map` (+minimap).
 
-[Join the Discord for announcements, discussion, and support.](https://discord.gg/khMPvWjnKt)
+> _This is a fork of [Gjum](https://github.com/Gjum)'s original [Map-Sync](https://github.com/CivPlatform/map-sync) mod_
+
+### Disclaimer
+I am new to mod development, so some things may be imperfect & not the most secure. I started this as a way to learn and to hopefully bring the mod to a state in which my friends & I can use it on our server.
+
+###### In case you notice any **Issues**, open a ticket :)
+
+## [Download](https://github.com/Sheepy-9/map-sync/releases)
+On the Releases page
 
 ## Usage
 
-Join a Minecraft server, press the GUI keybind (comma `,` by default), enter the address of your Sync Server, and click "Connect".
+Join a Minecraft server, open the GUI via the keybind (comma `,` by default) or through Mod Menu, enter the address of your Sync Server, and click "Connect".
 
 ## How it works
 
 When you connect, you receive all chunks that your friends have mapped since the last time you played (and were connected to the Sync Server).
 
-Every time any of your friends load a chunk with Map-Sync installed (even if they don't use any map mods!), it gets mapped and the map data gets sent to the Sync Server. It will then send it to everyone else, and if you have a compatible map mod installed (Journeymap or Voxelmap), the mod will display your friends' chunks.
+Every time any of your friends load a chunk with Map-Sync installed (even if they don't use any map mods!), it gets mapped and the map data gets sent to the Sync Server. It will then send it to everyone else, and if you have a compatible map mod installed (Journeymap, Voxelmap or Xaero's), the mod will display your friends' chunks.
 
 Map-Sync tracks a timestamp per chunk, so old data will never overwrite newer data.
-
-You can control who has access to a Sync Server by editing its `allowed-users.txt`. If someone connects who is not allowed access yet, their name and UUID gets written to `denied-users.txt`, from where you can just cut+paste it into `allowed-users.txt` and restart the server to grant access.
 
 ## Running a server
 
@@ -40,19 +45,21 @@ You can control who has access to a Sync Server by editing its `allowed-users.tx
 7. To run the server headless: 
     - `docker compose up map-sync -d`
     - To stop the headless server: `docker compose down map-sync`
+
 </details>
+
+By default, a whitelist will deny any connections, which can be turned off from the config file. (**Caution**)\
+You can also add and remove players via the commands below or via the config files
 
 <details>
-<summary>System Install</summary>
-<br />
+<summary>Config file approach</summary>
 
-- install recent nodejs (~17)
-- clone code, `cd server`
-- `npm install`
-- `npm run build` -- this has to be run after every time the code is edited
-- `npm run start`
-- to stop, press Ctrl+C twice
+- You can control who has access to a Sync Server by editing its `allowed-users.txt`. If someone connects who is not allowed access yet, their name and UUID gets written to `denied-users.txt`, from where you can just cut+paste it into `allowed-users.txt` and restart the server to grant access.
+
 </details>
+
+Client authentication can also be turned off for use with unauthenticated accounts. (ex. testing purposes)
+
 
 ### Server commands
 
@@ -65,6 +72,9 @@ whitelist_add_ign <name> -- requires the player to have connected in the past
 whitelist_remove_ign <name> -- requires the player to have connected in the past
 whitelist_add <uuid>
 whitelist_remove <uuid>
+list -- lists players
+send <uuid/name> -- sends all available data to player
+kick <uuid/name> -- kicks player from sync server
 ```
 
 ---
